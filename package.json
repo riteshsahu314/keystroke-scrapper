@@ -1,0 +1,16 @@
+{
+  "name": "keystroke-scraaper",
+  "version": "1.0.0",
+  "description": "Scrape data for keystroke project",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ritesh Sahu",
+  "license": "ISC",
+  "dependencies": {
+    "firestore-export-import": "^0.4.0",
+    "puppeteer": "^2.1.1"
+  }
+}
