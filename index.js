@@ -19,13 +19,14 @@ const serviceAccount = require("./serviceAccount.json");
     const website = websites[i];
 
     if (scrappers[website.scrapper]) {
-      console.log("Scrapping data for " + website.name);
+      websiteName = website.name.replace("_", " ");
+      console.log("Scrapping data for " + websiteName);
       const keystrokes = await scrappers[website.scrapper](page, website.url);
-      apps[website.name] = {};
-      apps[website.name]["shortcuts"] = parseKeystrokes(keystrokes);
-      apps[website.name]["icon"] = website.icon;
+      apps[websiteName] = {};
+      apps[websiteName]["shortcuts"] = parseKeystrokes(keystrokes);
+      apps[websiteName]["icon"] = website.icon;
     } else {
-      console.log("No scrapper found for " + website.name);
+      console.log("No scrapper found for " + websiteName);
     }
   }
   console.log("apps", apps);
@@ -42,29 +43,6 @@ const parseKeystrokes = (keystrokes) => {
     }
   });
   return keystrokes;
-};
-
-const modifyDataToStoreInFirebase = (data) => {
-  newData = {};
-  Object.values(SYSTEMS).forEach((system) => {
-    newData[system] = {};
-  });
-
-  data.forEach((item) => {
-    item.forEach((shortcutDetails) => {
-      if (!newData[shortcutDetails.system][shortcutDetails.app]) {
-        newData[shortcutDetails.system][shortcutDetails.app] = [];
-      }
-
-      newData[shortcutDetails.system][shortcutDetails.app].push({
-        category: shortcutDetails.category,
-        description: shortcutDetails.description,
-        shortcut: shortcutDetails.shortcut,
-      });
-    });
-  });
-
-  return newData;
 };
 
 // JSON To Firestore
